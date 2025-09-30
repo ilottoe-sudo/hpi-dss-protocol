@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPI-DSS 協議入口</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f4f7f6 0%, #e0e5eb 100%);
+            color: #333;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            margin-top: 120px; /* 避開頂部 header */
+        }
+        .tagline {
+            font-size: 1.2em;
+            color: #5a5a5a;
+            margin-bottom: 30px;
+        }
+        .protocol-link {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #28a745;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+        }
+        .protocol-link:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: left;
+        }
+        .info-section h3 {
+            color: #007bff;
+            font-size: 1.4em;
+            margin-top: 0;
+        }
+        .info-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>HPI-DSS 臨床決策支持系統</h1>
+        <p style="margin: 5px 0 0;">Hypotension Prediction Index Decision Support System</p>
+    </div>
+
+    <div class="container">
+        <div class="tagline">
+            讓預測成為主動治療的第一步：在術中低血壓發生前，精準指導您的血流動力學管理。
+        </div>
+
+        <a href="./hpi_dss_protocol_v3.html" class="protocol-link">
+            🚀 啟動 HPI-DSS 互動協議
+        </a>
+        
+        <div class="info-section">
+            <h3>系統概覽</h3>
+            <p>本協議基於機器學習模型 HPI (> 80% 啟動)，引導臨床人員透過以下關鍵參數進行診斷：</p>
+            <ul>
+                <li>**SVV**：判斷輸液反應性。</li>
+                <li>**Eadyn**：區分絕對或相對血容量不足。</li>
+                <li>**dP/dtmax & RVSI**：區分血管麻痺與心肌抑制。</li>
+            </ul>
+            <p style="font-style: italic; color: #dc3545;">**請注意：** 此工具為教育及輔助用途，所有臨床操作仍需依據專業判斷。</p>
+        </div>
+        
+        <div class="footer">
+            <p>GitHub 專案 | 決策協議版本 3.0</p>
+        </div>
+    </div>
+
+</body>
+</html>
