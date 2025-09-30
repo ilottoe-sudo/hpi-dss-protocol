@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPI-DSS 互動性血流動力學決策協議 (Interactive HPI-DSS Protocol)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px; /* 擴大容器以容納圖片 */
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .activation-header {
+            text-align: center;
+            color: white;
+            background-color: #dc3545;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        /* 圖片容器 */
+        .image-container {
+            width: 45%; /* 佔據容器約一半寬度 */
+            min-width: 400px; 
+            order: 1; /* 讓圖片先顯示 */
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #adb5bd;
+            border-radius: 8px;
+        }
+
+        /* 協議互動和文字參考區域 */
+        .protocol-content-area {
+            width: 45%;
+            min-width: 400px;
+            order: 2; /* 讓文字內容在圖片旁邊 */
+        }
+
+        h3 {
+            color: #6c757d;
+            border-bottom: 2px solid #adb5bd;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        /* 完整協議文字區塊 */
+        #full-protocol-static {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        #full-protocol-static ul, #full-protocol-static ol {
+            list-style: none;
+            padding-left: 10px;
+        }
+        #full-protocol-static li {
+            padding: 5px 10px;
+            border-left: 2px solid #adb5bd;
+            margin: 5px 0;
+            transition: background-color 0.3s;
+        }
+        /* 突出顯示當前步驟 */
+        .highlight {
+            background-color: #ffc107; /* 亮黃色高亮 */
+            font-weight: bold;
+            color: #333;
+            border-left: 4px solid #007bff !important;
+        }
+        /* 互動區塊 */
+        .protocol-section {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #0056b3;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .btn-yes {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-no {
+            background-color: #dc3545;
+            color: white;
+        }
+        .result-box {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            display: none;
+        }
+        .reset-btn {
+            background-color: #6c757d;
+            color: white;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* 響應式設計調整 */
+        @media (max-width: 992px) {
+            .image-container, .protocol-content-area {
+                width: 100%;
+                min-width: unset;
+                order: unset;
+            }
+            .container {
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>HPI-DSS 互動性血流動力學決策協議</h1>
+    
+    <div class="activation-header">🚨 協議啟動條件：HPI > 80% 🚨</div>
+
+    <div class="image-container">
+        <h3>視覺化流程圖：圖 1</h3>
+        <img src="image_ce6308.png" alt="血流動力學治療演算法圖">
+    </div>
+
+    <div class="protocol-content-area">
+        
+        <div id="full-protocol-static">
+            <h3>完整決策路徑參考 (文字版)</h3>
+            <ul style="padding-left: 0;">
+                <li id="step_ACTION" style="font-weight: bold; padding: 10px; background-color: #e9ecef;">I-1: HPI > 80% 觸發動作 (ACTION)</li>
+                <ul style="padding-left: 20px;">
+                    <li id="step_A">問題 A：SVV ≥ 13%？ (判斷輸液反應性)</li>
+                    <ul style="padding-left: 20px;">
+                        <li id="step_B" style="color: #28a745;">**【路徑 I: SVV ≥ 13%】** 問題 B：Eadyn ≥ 1？ (絕對 vs 相對血容量不足)</li>
+                        <ul style="padding-left: 40px;">
+                            <li id="result_ABSOLUTE_HYPOVOLEMIA">結果：絕對血容量不足 → **CRYSTALLOID 250 ml**</li>
+                            <li id="result_RELATIVE_HYPOVOLEMIA">結果：相對血容量不足 → **CRYSTALLOID 250 ml + PHENILEPRINE 100 mg** (需檢查 HR ≤ 60)</li>
+                        </ul>
+                    </ul>
+                    <ul style="padding-left: 20px;">
+                        <li id="step_C" style="color: #0056b3;">**【路徑 II: SVV < 13%】** 問題 C：dP/dt ≥ 400？ (判斷心肌收縮力)</li>
+                        <ul style="padding-left: 40px;">
+                            <li id="result_VASOPLEGIA">結果：血管麻痺 (Vasoplegia) → **EPHEDRINE/NORADRENALINE**</li>
+                            <li id="step_E">問題 E：RVSI ≥ 1500？ (細分心肌抑制)</li>
+                            <ul style="padding-left: 60px;">
+                                <li id="result_MYOCARDIAL_DEPRESSION">結果：心肌抑制 → **DOBUTAMINE 2.5-5 µg/kg/min**</li>
+                                <li id="result_DEPRESSION_VASOPLEGIA">結果：伴有血管麻痺的心肌抑制 → **EPHEDRINE/NORADRENALINE**</li>
+                            </ul>
+                        </ul>
+                    </ul>
+                </ul>
+            </ul>
+            <p style="font-size: 0.9em; margin-top: 15px; color: #6c757d;">*此處的路徑 I 已經簡化了圖中針對 HR ≤ 60 和 SVV ≥ 16 的細分步驟，以配合核心參數問答流程。</p>
+        </div>
+        
+        <div id="protocol" class="protocol-section">
+            </div>
+
+        <div id="result" class="result-box">
+            <strong>最終診斷表型：</strong><span id="phenotype"></span><br>
+            <div class="treatment"><strong>治療建議：</strong><span id="treatment"></span></div>
+        </div>
+        
+        <button id="reset-btn" class="btn reset-btn" onclick="startProtocol()">重新開始診斷</button>
+    </div>
+
+</div>
+
+<script>
+    const protocolDiv = document.getElementById('protocol');
+    const resultDiv = document.getElementById('result');
+    const phenotypeSpan = document.getElementById('phenotype');
+    const treatmentSpan = document.getElementById('treatment');
+    const fullProtocolItems = document.querySelectorAll('#full-protocol-static li');
+
+    // 定義協議的狀態和步驟 (調整為對應圖 1 的核心決策點)
+    const steps = {
+        START: {
+            question: "【第一步：SVV】SVV（每搏輸出量變異）是否 ≥ 13%？",
+            path: { YES: 'B_Eadyn', NO: 'C_dPdt' },
+            id: 'step_A'
+        },
+        // 路徑 I: SVV ≥ 13% - 判斷 Eadyn
+        B_Eadyn: {
+            question: "【問題 B：Eadyn】Eadyn（動態動脈彈性）是否 ≥ 1？",
+            path: { YES: 'RESULT_ABSOLUTE_HYPOVOLEMIA', NO: 'RESULT_RELATIVE_HYPOVOLEMIA' },
+            id: 'step_B' 
+        },
+        // 路徑 II-1: SVV < 13% - 判斷 dP/dt
+        C_dPdt: {
+            question: "【問題 C：dP/dt】dP/dt（最大動脈壓上升斜率）是否 ≥ 400 mmHg/s？",
+            path: { YES: 'RESULT_VASOPLEGIA', NO: 'E_RVSI' },
+            id: 'step_C'
+        },
+        // 路徑 II-2: SVV < 13% 且 dP/dt < 400 - 判斷 RVSI
+        E_RVSI: {
+            question: "【問題 E：RVSI】RVSI（全身血管阻力指數）是否 ≥ 1500 dyn·s/cm⁵/m²？",
+            path: { YES: 'RESULT_MYOCARDIAL_DEPRESSION', NO: 'RESULT_DEPRESSION_VASOPLEGIA' },
+            id: 'step_E'
+        },
+
+        // 結果定義 (與圖 1 保持一致)
+        RESULT_ABSOLUTE_HYPOVOLEMIA: {
+            phenotype: "絕對血容量不足 (Absolute Hypovolemia)",
+            treatment: "需進一步判斷 SVV≥16 和 HR≤60 後，建議使用 CRYSTALLOID 250 ml 及/或 EPHEDRINE/PHENILEPRINE。",
+            id: 'result_ABSOLUTE_HYPOVOLEMIA'
+        },
+        RESULT_RELATIVE_HYPOVOLEMIA: {
+            phenotype: "相對血容量不足 (Relative Hypovolemia)",
+            treatment: "建議使用 CRYSTALLOID 250 ml + PHENILEPRINE 100 mg。",
+            id: 'result_RELATIVE_HYPOVOLEMIA'
+        },
+        RESULT_VASOPLEGIA: {
+            phenotype: "血管麻痺 (Vasoplegia)",
+            treatment: "EPHEDRINE 5-10 mg；若 3 劑 Ephedrine 無效，使用 NORADRENALINE 0.05 µg/kg/h。",
+            id: 'result_VASOPLEGIA'
+        },
+        RESULT_MYOCARDIAL_DEPRESSION: {
+            phenotype: "心肌抑制 (Myocardial Depression)",
+            treatment: "DOBUTAMINE 2.5-5 µg/kg/min。",
+            id: 'result_MYOCARDIAL_DEPRESSION'
+        },
+        RESULT_DEPRESSION_VASOPLEGIA: {
+            phenotype: "伴有血管麻痺的心肌抑制 (Myocardial Depression with Vasoplegia)",
+            treatment: "EPHEDRINE 5-10 mg；若 3 劑 Ephedrine 無效，使用 NORADRENALINE 0.05 µg/kg/h。",
+            id: 'result_DEPRESSION_VASOPLEGIA'
+        }
+    };
+
+    let currentStep = 'START';
+
+    function startProtocol() {
+        currentStep = 'START';
+        resultDiv.style.display = 'none';
+        renderStep();
+        // 重設起始點高亮
+        fullProtocolItems.forEach(item => item.classList.remove('highlight'));
+        document.getElementById('step_ACTION').classList.add('highlight');
+    }
+
+    function renderStep() {
+        const step = steps[currentStep];
+        if (!step) return;
+
+        // 1. 清除所有高亮並高亮當前步驟
+        fullProtocolItems.forEach(item => item.classList.remove('highlight'));
+        document.getElementById('step_ACTION').classList.add('highlight'); // 保留 ACTION 高亮
+        
+        const currentItem = document.getElementById(step.id);
+        if (currentItem) {
+            currentItem.classList.add('highlight');
+        }
+
+        protocolDiv.innerHTML = '';
+        
+        if (currentStep.startsWith('RESULT')) {
+            // 2. 顯示結果
+            phenotypeSpan.textContent = step.phenotype;
+            treatmentSpan.textContent = step.treatment;
+            resultDiv.style.display = 'block';
+            protocolDiv.innerHTML = `<p style="color: #155724; font-weight: bold;">✅ 診斷完成，請查看下方結果與治療建議。</p>`;
+        } else {
+            // 3. 顯示問題和按鈕
+            protocolDiv.innerHTML = `
+                <div class="question">${step.question}</div>
+                <div class="buttons">
+                    <button class="btn btn-yes" onclick="handleAnswer('YES')">是 (YES)</button>
+                    <button class="btn btn-no" onclick="handleAnswer('NO')">否 (NO)</button>
+                </div>
+                <p style="font-size: 0.9em; color: #6c757d;">請根據實時監測數據點擊對應按鈕。</p>
+            `;
+        }
+    }
+
+    function handleAnswer(answer) {
+        const step = steps[currentStep];
+        if (step && step.path) {
+            const nextStepKey = (answer === 'YES' ? 'YES' : 'NO');
+            currentStep = step.path[nextStepKey];
+            renderStep();
+        }
+    }
+
+    // 首次加載時啟動協議
+    window.onload = startProtocol;
+</script>
+
+</body>
+</html>
