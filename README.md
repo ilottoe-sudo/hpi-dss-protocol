@@ -17,9 +17,7 @@
 
 點擊以下連結，即可直接進入互動協議網頁：
 
-👉 **[HPI-DSS 互動協議網頁連結 (此處請貼上您的 GitHub Pages URL)]**
-
-**(範例 URL 格式：`https://[您的帳號].github.io/[儲存庫名稱]/hpi_dss_protocol_v3.html`)**
+👉 **[HPI-DSS 互動協議網頁連結 (https://ilottoe-sudo.github.io/hpi-dss-protocol/)]**
 
 ### 2. 操作步驟
 
